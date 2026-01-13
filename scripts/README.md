@@ -12,6 +12,7 @@ chmod a+x UpdateScripts.sh
 ```bash
 export LOCALSITENAME="mysite"
 export SITETYPE="PROXY"
+# export LOCALSITEURL="mysite.mini.pc"
 # export SITETYPE="HTPASSWD"
 ./CreateApacheLocalSite.sh
 ```
@@ -22,3 +23,4 @@ export SITETYPE="PROXY"
 # export SITETYPE="HTPASSWD"
 ./CreateApacheSite.sh
 ```
+
