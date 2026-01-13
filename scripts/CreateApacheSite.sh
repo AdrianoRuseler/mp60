@@ -80,7 +80,7 @@ fi
 case $SITETYPE in
 PROXY)
 	echo "Site type is PROXY"
-	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/proxy-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
+	wget https://raw.githubusercontent.com/AdrianoRuseler/mp60/refs/heads/main/scripts/proxy-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
 	;;
 HTPASSWD)
 	echo "Site type is HTPASSWD"
@@ -103,12 +103,12 @@ HTPASSWD)
 	echo "SITEUSER=\"$SITEUSER\"" >>$ENVFILE
 	echo "SITEPASS=\"$SITEPASS\"" >>$ENVFILE
 
-	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/htpasswd-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
+	wget https://raw.githubusercontent.com/AdrianoRuseler/mp60/refs/heads/main/scripts/htpasswd-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
 	sed -i 's/changetousername/'${LOCALSITENAME}$'/' /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
 	;;
 *)
 	echo "Site type is unknown"
-	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
+	wget https://raw.githubusercontent.com/AdrianoRuseler/mp60/refs/heads/main/scripts/default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
 	;;
 esac
 
