@@ -1,0 +1,29 @@
+services:
+  mariadb:
+    image: linuxserver/mariadb:latest
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=root_password_here
+      - MYSQL_CHARACTER_SET=utf8mb4
+      - MYSQL_COLLATE=utf8mb4_unicode_ci
+    volumes:
+      - 'mariadb_data:/config'
+  phpmyadmin:
+    image: linuxserver/phpmyadmin:latest
+    ports:
+      - '8081:80'
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root_password_here
+      # PHP Configuration overrides
+      - PHP_MEMORY_LIMIT=512M # Sets memory_limit to 512 Megabytes
+      - PHP_MAX_EXECUTION_TIME=300 # Sets max_execution_time to 300 seconds
+      - PHP_UPLOAD_MAX_FILESIZE=50M # Sets upload_max_filesize to 50 Megabytes
+      - PHP_POST_MAX_SIZE=50M # Sets post_max_size to 50 Megabytes (should match or be slightly larger than upload_max_filesize)
+    depends_on:
+      - mariadb
+volumes:
+  mariadb_data:
