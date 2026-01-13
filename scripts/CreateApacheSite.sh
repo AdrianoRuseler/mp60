@@ -78,18 +78,6 @@ fi
 
 # Create new conf files
 case $SITETYPE in
-MDL)
-	echo "Site type is MDL" #
-	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/mdl-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
-	;;
-PMA)
-	echo "Site type is PMA"
-	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/pma-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
-	;;
-PHP)
-	echo "Site type is PHP"
-	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/php-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
-	;;
 PROXY)
 	echo "Site type is PROXY"
 	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/proxy-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
