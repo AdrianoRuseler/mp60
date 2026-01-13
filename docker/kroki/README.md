@@ -26,6 +26,10 @@ nano /etc/apache2/sites-available/kroki.mini.pc-ssl.conf
     # Timeout Issues: you might need to increase the proxy timeout
     ProxyTimeout 60
 ```
+## Test
+```
+https://kroki.mini.pc/graphviz/svg/eNpLyUwvSizIUHBXqPZIzcnJ17ULzy_KSanlAgB1EAjQ
+```
 
 ## Use with MATLAB
 
@@ -41,3 +45,4 @@ Add -k flag to allow self-signed certificates
 curl_command = 'curl -k -s -X POST -H "Content-Type: text/plain" https://kroki.mini.pc/graphviz/svg --data-raw "digraph G {Hello->World}"';
 [status, cmdout] = system(curl_command);
 ```
+
