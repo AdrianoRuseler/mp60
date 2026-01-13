@@ -4,7 +4,8 @@
 
 # Set web server (apache)
 # export LOCALSITENAME="devtest"
-# export SITETYPE="MDL"
+# export LOCALSITEURL="devtest.mini.pc"
+# export SITETYPE="PROXY"
 
 # Load .env
 if [ -f .env ]; then
@@ -21,10 +22,10 @@ else
 	echo "LOCALSITENAME has the value: $LOCALSITENAME"
 fi
 
-# Verify for SITETYPE;  MDL, PMA, PHP, ...
+# Verify for SITETYPE;  PROXY, HTPASSWD, ...
 if [[ ! -v SITETYPE ]] || [[ -z "$SITETYPE" ]]; then
 	echo "SITETYPE is not set or is set to the empty string!"
-	SITETYPE="PHP"
+	SITETYPE="PROXY"
 fi
 
 datastr=$(date) # Generates datastr
@@ -36,7 +37,7 @@ echo "LOCALSITENAME=\"$LOCALSITENAME\"" >>$ENVFILE
 # Verify for LOCALSITEURL
 if [[ ! -v LOCALSITEURL ]] || [[ -z "$LOCALSITEURL" ]]; then
 	echo "LOCALSITEURL is not set or is set to the empty string"
-	LOCALSITEURL=${LOCALSITENAME}'.local' # Generates ramdon site name
+	LOCALSITEURL=${LOCALSITENAME}'.mini.pc' # Generates ramdon site name
 	echo "LOCALSITEURL=\"$LOCALSITEURL\"" >>$ENVFILE
 else
 	echo "LOCALSITEURL has the value: $LOCALSITEURL"
@@ -82,7 +83,7 @@ openssl req -x509 -out /etc/ssl/certs/${LOCALSITEURL}-selfsigned.crt -keyout /et
 case $SITETYPE in
 PROXY)
 	echo "Site type is PROXY"
-	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/proxy-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
+	wget https://raw.githubusercontent.com/AdrianoRuseler/mp60/refs/heads/main/scripts/proxy-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
 	;;
 HTPASSWD)
 	echo "Site type is HTPASSWD"
@@ -105,12 +106,12 @@ HTPASSWD)
 	echo "SITEUSER=\"$SITEUSER\"" >>$ENVFILE
 	echo "SITEPASS=\"$SITEPASS\"" >>$ENVFILE
 
-	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/htpasswd-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
+	wget https://raw.githubusercontent.com/AdrianoRuseler/mp60/refs/heads/main/scripts/htpasswd-default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
 	sed -i 's/changetousername/'${LOCALSITENAME}$'/' /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
 	;;
 *)
 	echo "Site type is unknown"
-	wget https://raw.githubusercontent.com/AdrianoRuseler/moodle-update-script/master/scripts/jenkins/default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
+	wget https://raw.githubusercontent.com/AdrianoRuseler/mp60/refs/heads/main/scripts/default-ssl.conf -O /etc/apache2/sites-available/${LOCALSITEURL}-ssl.conf
 	;;
 esac
 
