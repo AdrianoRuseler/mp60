@@ -163,7 +163,7 @@ echo ""
 echo "##---- LOCAL DNS SERVICE CONFIGURATION ------##"
 echo ""
 
-IP4STR=$(ip -4 addr show enp0s3 | grep -oP "(?<=inet ).*(?=/)")
+IP4STR=$(ip -4 addr show enp1s0 | grep -oP "(?<=inet ).*(?=/)")
 
 echo "Add $IP4STR $LOCALSITEURL to %WINDIR%\System32\drivers\etc\hosts or run as admin:"
 echo "echo $IP4STR $LOCALSITEURL >> %WINDIR%\System32\drivers\etc\hosts"
