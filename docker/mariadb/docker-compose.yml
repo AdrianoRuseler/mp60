@@ -23,6 +23,7 @@ services:
       - PHP_MAX_EXECUTION_TIME=300 # Sets max_execution_time to 300 seconds
       - PHP_UPLOAD_MAX_FILESIZE=50M # Sets upload_max_filesize to 50 Megabytes
       - PHP_POST_MAX_SIZE=50M # Sets post_max_size to 50 Megabytes (should match or be slightly larger than upload_max_filesize)
+      - TZ=America/Sao_Paulo
     depends_on:
       - mariadb
 volumes:
