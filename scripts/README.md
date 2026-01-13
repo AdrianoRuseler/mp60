@@ -23,4 +23,3 @@ export SITETYPE="PROXY"
 # export SITETYPE="HTPASSWD"
 ./CreateApacheSite.sh
 ```
-
