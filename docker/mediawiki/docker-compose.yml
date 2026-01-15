@@ -1,0 +1,53 @@
+services:
+  # Database: MariaDB
+  wikidb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: wikidb
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=mariadb_root_password
+      - TZ=America/Sao_Paulo
+      - MYSQL_DATABASE=mediawiki_db
+      - MYSQL_USER=mw_user
+      - MYSQL_PASSWORD=mw_password
+    volumes:
+      - ./mysql_data:/config
+    restart: unless-stopped
+
+  # MediaWiki Application
+  mediawiki:
+    image: mediawiki:latest
+    container_name: mediawiki
+    restart: unless-stopped
+    ports:
+      - "8082:80"
+    environment:
+      - MW_DB_SERVER=wikidb
+      - MW_DB_NAME=mediawiki_db
+      - MW_DB_USER=mw_user
+      - MW_DB_PASSWORD=mw_password
+    volumes:
+      - ./mediawiki_data:/var/www/html/images
+      # After initial setup, you will move LocalSettings.php here:
+      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      # php maintenance/run.php update
+    depends_on:
+      - wikidb
+
+  # Database Management: phpMyAdmin
+  phpmyadmin:
+    image: lscr.io/linuxserver/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - PMA_HOST=wikidb
+    volumes:
+      - ./pma_config:/config
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    depends_on:
+      - wikidb
