@@ -1,6 +1,7 @@
 services:
   mariadb:
     image: linuxserver/mariadb:latest
+    restart: always
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
@@ -11,6 +12,7 @@ services:
       - 'mariadb_data:/config'
   phpmyadmin:
     image: linuxserver/phpmyadmin:latest
+    restart: always
     ports:
       - '8081:80'
     environment:
