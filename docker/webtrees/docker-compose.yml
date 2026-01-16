@@ -1,0 +1,34 @@
+services:
+  webtrees:
+    image: nathanvaughn/webtrees:latest
+    container_name: webtrees
+    restart: unless-stopped
+    ports:
+      - "8078:80"
+    environment:
+      PRETTY_URLS: "1"
+      HTTPS: "0"
+      HTTPS_REDIRECT: "0"
+      LANG: "en-US"
+      BASE_URL: "https://webtrees.mini.pc"
+      DB_TYPE: "mysql"
+      DB_HOST: "mariadb"
+      DB_PORT: "3306"
+      DB_USER: "webtrees"
+      DB_PASS: "baddbpassword"
+      DB_NAME: "webtrees"
+      DB_PREFIX: "wt_"
+      WT_USER: "username"
+      WT_NAME: "Full Name"
+      WT_PASS: "badwtpassword"
+      WT_EMAIL: "me@example.com"
+      PUID: "1000"
+      PGID: "1000"
+    volumes:
+      - ./webtrees_data:/var/www/webtrees/data/
+    networks:
+      - mariadb_mariadbnet
+
+networks:
+  mariadb_mariadbnet:
+    external: true
