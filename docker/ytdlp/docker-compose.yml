@@ -1,0 +1,20 @@
+services:
+  yt-dlp-webui-xbuild:
+    image: ruseler/yt-dlp-webui-xbuild:latest
+    container_name: yt-dlp-webui-xbuild
+    networks:
+      - ytdlp_network
+    environment:
+      - TZ=America/Sao_Paulo
+    ports:
+      - 3033:3033
+    volumes:
+      - ./downloads:/downloads 
+      - ./config.yml:/config/config.yml
+    healthcheck:
+      test: curl -f http://localhost:3033 || exit 1
+    restart: unless-stopped
+networks:
+  ytdlp_network:
+    driver: bridge
+    
