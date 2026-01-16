@@ -13,7 +13,6 @@ nano /etc/apache2/sites-available/ytdlp.mini.pc-ssl.conf
 
 ```bash
     # Proxy to yt-dlp container
-        ProxyPreserveHost On
     # ProxyRequests Off
 
     ProxyPreserveHost On
