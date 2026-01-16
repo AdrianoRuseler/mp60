@@ -1,0 +1,40 @@
+services:
+  pgdb:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    networks:
+      - pgdbnet
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_container
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8079:80"
+    networks:
+      - pgdbnet
+    volumes:
+      # This is where all pgAdmin settings and saved servers are stored
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - pgdb
+
+networks:
+  pgdbnet:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data: # New volume for pgAdmin storage
