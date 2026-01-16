@@ -1,0 +1,43 @@
+services:
+  wpdb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: wordpress_db
+    networks:
+      - site_network
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - MYSQL_ROOT_PASSWORD=mariadb_root_password
+      - MYSQL_DATABASE=wordpress_db
+      - MYSQL_USER=wordpress_user
+      - MYSQL_PASSWORD=wordpress_password
+    volumes:
+      - ./db_config:/config
+    restart: unless-stopped
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress_app
+    networks:
+      - site_network
+    depends_on:
+      - wpdb
+    ports:
+      - "8084:80"
+    environment:
+      - WORDPRESS_DB_HOST=wpdb:3306
+      - WORDPRESS_DB_USER=wordpress_user
+      - WORDPRESS_DB_PASSWORD=wordpress_password
+      - WORDPRESS_DB_NAME=wordpress_db
+    volumes:
+      - ./wp_data:/var/www/html
+    restart: unless-stopped
+
+networks:
+  site_network:
+    driver: bridge
+
+volumes:
+  db_config:
+  wp_data:
