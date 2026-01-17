@@ -1,0 +1,21 @@
+services:
+  phpmyadmin:
+    image: lscr.io/linuxserver/phpmyadmin:latest
+    container_name: phpmyadmin
+    networks:
+      - site_network
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - PMA_ARBITRARY=1 #optional
+      - PMA_ABSOLUTE_URI=https://phpmyadmin.mini.pc #optional
+    volumes:
+      - /path/to/phpmyadmin/config:/config
+    ports:
+      - 8081:80
+    restart: unless-stopped
+networks:
+  site_network:
+    external: true
+    
