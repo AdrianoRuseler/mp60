@@ -9,7 +9,15 @@ nano docker-compose.yml
 docker compose up -d
 ```
 
+```bash
+export LOCALSITENAME="ytdlp"
+export SITETYPE="PROXY"
+./CreateApacheLocalSite.sh
+```
+
+```bash
 nano /etc/apache2/sites-available/ytdlp.mini.pc-ssl.conf
+```
 
 ```bash
     # Proxy to yt-dlp container
