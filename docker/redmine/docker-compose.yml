@@ -1,0 +1,21 @@
+services:
+  redmine:
+    image: redmine:alpine
+    container_name: redmine
+    ports:
+      - "3000:3000"
+    volumes:
+      - redmine_data:/usr/src/redmine/files
+      - redmine_db:/usr/src/redmine/sqlite
+      - redmine_plugins:/usr/src/redmine/plugins
+      - redmine_themes:/usr/src/redmine/public/themes
+    environment:
+      - REDMINE_DB_ADAPTER=sqlite3
+      - REDMINE_DB_DATABASE=/usr/src/redmine/sqlite/redmine.db
+    restart: unless-stopped
+
+volumes:
+  redmine_data:
+  redmine_db:
+  redmine_plugins:
+  redmine_themes:
