@@ -34,9 +34,19 @@ nano config/variables.env
 ```bash
 nano config/variables.env
 
+NODE_ENV=production
 OVERLEAF_BEHIND_PROXY=true
 OVERLEAF_SITE_URL=https://overleaf.mini.pc
 SIBLING_CONTAINERS_ENABLED=false
+OVERLEAF_PROXY_LEARN=true
+
+# Enable the snip feature
+OVERLEAF_ALLOW_SNIPS=true
+
+# Define which domains are allowed (Regex). 
+# This example allows any domain. For better security, limit it to your known hosts.
+OVERLEAF_SNIP_HOST_WHITELIST=".*"
+
 ```
 
 ```bash
@@ -86,3 +96,11 @@ systemctl reload apache2
 ```bash
 docker network ls
 ```
+
+
+https://overleaf.mini.pc/docs?snip_uri=https://raw.githubusercontent.com/AdrianoRuseler/mp60/refs/heads/main/docker/overleaf/test.tex
+
+
+https://overleaf.mini.pc/project/new/snip?snip_uri=https://raw.githubusercontent.com/AdrianoRuseler/mp60/refs/heads/main/docker/overleaf/test.tex
+
+https://your-domain.com/project/new/snip?snip_uri=URL
