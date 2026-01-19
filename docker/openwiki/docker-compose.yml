@@ -1,0 +1,24 @@
+services:
+  # MediaWiki Application
+  mediawiki:
+    image: mediawiki:latest
+    container_name: mediawiki
+    restart: unless-stopped
+    ports:
+      - "8083:80"
+    environment:
+      - MW_DB_SERVER=mariadb
+      - MW_DB_NAME=openwiki
+      - MW_DB_USER=openwiki
+      - MW_DB_PASSWORD=mw_password
+    volumes:
+      - ./mediawiki_data:/var/www/html/images
+      # After initial setup, you will move LocalSettings.php here:
+      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      # php maintenance/run.php update
+    networks:
+      - mariadb_mariadbnet
+
+networks:
+  mariadb_mariadbnet:
+    external: true
