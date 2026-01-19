@@ -3,6 +3,14 @@ The WordPress rich content management system can utilize plugins, widgets, and t
 - https://wordpress.org/
 - https://hub.docker.com/_/wordpress
   
+
+```bash
+export LOCALSITENAME="site"
+export SITETYPE="PROXY"
+./CreateApacheLocalSite.sh
+```
+
+
 ```bash
 nano docker-compose.yml
 docker compose up -d
