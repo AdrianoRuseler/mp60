@@ -1,0 +1,25 @@
+services:
+  maxima:
+    image: mathinstitut/goemaxima:${STACKMAXIMA_VERSION:-2026010500}-latest
+    ports:
+      - 0.0.0.0:7080:8080
+    tmpfs:
+      - "/tmp"
+    restart: unless-stopped
+    cap_add:
+      - SETGID
+      - SETUID
+    cap_drop:
+      - ALL
+    read_only: true
+    environment:
+      - MAXIMA_USER=maxima
+      - MAXIMA_GROUP=maxima
+      - MAXIMA_UID=1000
+      - MAXIMA_GID=1000
+      - MAXIMA_MEMORY_LIMIT=2048
+      - MAXIMA_CPU_TIME_LIMIT=60
+      - MAXIMA_ENABLE_LOGGING=true
+      - MAXIMA_LOG_FILE=/tmp/maxima.log
+      - MAXIMA_LOG_LEVEL=INFO
+      - MAXIMA_ENABLE_REMOTE_API=true
