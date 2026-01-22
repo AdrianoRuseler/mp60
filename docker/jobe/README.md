@@ -4,6 +4,11 @@ The dockerfile and doc for building the Docker image JobeInABox
 - https://github.com/trampgeek/jobeinabox
 - https://github.com/trampgeek/jobe
 
+Clean list of just the names and ports.
+```bash
+docker ps --format "table {{.Names}}\t{{.Ports}}"
+```
+
 ```bash
 docker compose up -d
 ```
@@ -28,3 +33,5 @@ jobeinabox Logs: Check why the container might be rejecting the connection:
 ```bash
 docker logs -f jobeinabox-jobe-1
 ```
+
+docker exec -it jobeinabox-jobe-1 /var/www/html/jobe/testsubmit.py --perf
