@@ -1,0 +1,38 @@
+services:
+  openldap:
+    image: osixia/openldap:latest
+    container_name: openldap
+    ports:
+      - "389:389"   # Standard LDAP port (unsecured)
+      - "636:636"   # LDAPS port (secured)
+    environment:
+      LDAP_BASE_DN: "dc=example,dc=org" # cn=admin,dc=example,dc=org
+      LDAP_ORGANISATION: "Example Organization"
+      LDAP_ADMIN_PASSWORD: "adminpassword"
+      LDAP_TLS: "false" # Set to 'true' for TLS, requires certificates configuration
+    volumes:
+      # Optional: persist data and config in named volumes
+      - ldap-data:/var/lib/ldap
+      - ldap-config:/etc/ldap/slapd.d
+      # Optional: mount custom LDIF files for initial data/schema
+      # - ./bootstrap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/50-bootstrap.ldif
+    command: --copy-service
+    restart: unless-stopped
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    ports:
+      - "8081:80" # Web interface port
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: openldap # Connects to the 'openldap' service hostname
+      PHPLDAPADMIN_HTTPS: "false" # Set to 'true' for HTTPS
+    restart: unless-stopped
+    depends_on:
+      - openldap
+    networks:
+      default:
+
+volumes:
+  ldap-data:
+  ldap-config:
