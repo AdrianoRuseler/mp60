@@ -8,6 +8,7 @@ Easiest, fastest, and most painless way of setting up a self-hosted Git service.
 - https://docs.gitea.com/usage/actions/act-runner
 - https://gitea.com/gitea/act_runner
 - https://hub.docker.com/r/gitea/act_runner
+- https://about.gitea.com/products/tea/
   
 
 Clean list of just the names and ports.
@@ -51,11 +52,27 @@ systemctl reload apache2
     RewriteRule ^/?(.*) "ws://localhost:3000/$1" [P,L]
 ```
 
-goemaxima Logs: Check why the container might be rejecting the connection:
+act_runner Logs: Check why the container might be rejecting the connection:
 ```bash
-docker logs -f gitea-act-runner-1
+docker ps
+docker logs -f act_runner
+```
 
-docker logs -f gitea-act-runner
+```bash
+docker network ls
+```
+
+## Create the config.yaml
+Run this command in your terminal (inside the same folder as your docker-compose.yml) to extract the default configuration file:
+
+```bash
+docker run --entrypoint="" --rm gitea/act_runner:latest act_runner generate-config > config.yaml
+```
+
+```bash
+container:
+  # Change this from "" to your network name
+  network: "gitea-network"
 ```
 
 - https://gitea.mini.pc
@@ -66,3 +83,12 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -subj "/CN=gitea.mini.pc" \
   -addext "subjectAltName=DNS:gitea.mini.pc"
 ```
+
+## job container (the one that actually runs your CI steps) cannot find the Gitea server.
+Even if the main act_runner container is connected to Gitea, it spawns new temporary containers for every job. By default, these new containers are isolated and don't know about your custom Docker networks or local hostnames.
+
+
+Gitea, act runners spawns new temporary containers for every job in the same network as Gitea
+
+docker compose file and config for gitea and act runner to spawn new temporary containers for every job in the same network as Gitea
+
