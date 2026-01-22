@@ -3,6 +3,8 @@ A maxima CAS server for STACK
 
 - https://github.com/mathinstitut/goemaxima
 - https://hub.docker.com/r/mathinstitut/goemaxima
+- https://github.com/maths/moodle-qtype_stack
+- https://stack-assessment.org/
   
 
 Clean list of just the names and ports.
