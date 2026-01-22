@@ -22,11 +22,14 @@ services:
     container_name: act_runner
     environment:
       - GITEA_INSTANCE_URL=http://gitea:3000
-      - GITEA_RUNNER_REGISTRATION_TOKEN=ZY9dRWJZl9PxZqSOL16zK2oyNUdbx9BPJ6awck06
+      - GITEA_RUNNER_REGISTRATION_TOKEN=34wyF2TTms68SGAyCMe4vv2IIjGMux3nrp86c06J
       - GITEA_RUNNER_NAME=runner-1
-      - GITEA_RUNNER_LABELS=ubuntu-latest
+      - GITEA_RUNNER_LABELS=ubuntu-latest:docker://node:16-bullseye
+      # Add this line to point to the config file:
+      - CONFIG_FILE=/etc/act-runner/config.yaml
     volumes:
-      - ./act-runner/config:/etc/act-runner
+    # docker run --entrypoint="" --rm gitea/act_runner:latest act_runner generate-config > config.yaml
+      - ./config.yaml:/etc/act-runner/config.yaml
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - gitea
