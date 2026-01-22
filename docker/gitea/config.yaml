@@ -1,0 +1,4 @@
+container:
+  # Change this from "" to your network name
+  network: "gitea-network"
+  
